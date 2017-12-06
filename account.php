@@ -30,13 +30,13 @@
   <div class="container">
 
     <p><label><b>Username</b></label>
-    <input type="text" placeholder="Enter Username" id="usrname" required></p>
+    <input type="text" placeholder="Enter Username" name="usrname" required></p>
 
     <p><label><b>Password</b></label>
-    <input type="password" placeholder="Enter Password" id="psw" required></p>
+    <input type="password" placeholder="Enter Password" name="psw" required></p>
 
     <p><label><b>Email</b></label>
-    <input type="text" placeholder="Enter Email" id="lname" required></p>
+    <input type="text" placeholder="Enter Email" name="lname" required></p>
     
     <div class="clearfix">
       <button type="button"  class="cancelbtn">Cancel</button>

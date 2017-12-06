@@ -21,16 +21,12 @@
 	$password = mysqli_real_escape_string($conn, $_POST['psw']);
 	$email = mysqli_real_escape_string($conn, $_POST['lname']);
 
-	console.log("username should be");
-	console.log($username);
 
 	$salt = base64_encode(mcrypt_create_iv(12, MCRYPT_DEV_URANDOM));
 	$password = $password.$salt;
 	$password = hash(md5, $password);
 
-	$query = "INSERT INTO Users (username, hashed_pass, salt, email)
-		VALUES ('$username', '$password', '$salt', '$email')"
-		;
+	$query = "INSERT INTO Users (username, hashed_pass, salt, email) VALUES ('$username', '$password', '$salt', '$email')";
 	if(mysqli_query($conn, $query)){
 		echo "recorded successfully";
 	}else{
