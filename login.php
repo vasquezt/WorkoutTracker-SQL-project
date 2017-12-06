@@ -21,7 +21,7 @@
 <main class="home-page">
   <div class="title-container">
 
-<form action="./action_page.php">
+<form action="./checkLogIn.php">
   <div class="container">
 
     <p><label><b>Username</b></label>
