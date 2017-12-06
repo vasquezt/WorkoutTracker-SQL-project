@@ -19,26 +19,37 @@
 		<li class="navitem"><a href="./">Home</a></li>
 		<li class="navitem"><a href="./mypage.php">My Page</a></li>
 		<li class="navitem"><a href="./account.php">Account</a></li>
+		<li class="navitem"><a href="./about.php">About</a></li>
 	</ul>
 </center>
 
 <main class="home-page">
 <div class="title-container">
 <center>
-<form>
+<form action="./insert_routine.php" method="post">
 <p><label><b>Routine Name</b></label>
-<input type="text" placeholder="Enter name of routine - ex. Leg Day" name="usrname" required></p>
+<input type="text" placeholder="Enter name of routine - ex. Leg Day" name="routine" required></p>
 
 <p><label><b>Type</b></label>
-<input type="text" placeholder="Enter type of routine - ex. Squats" name="fname" required></p>
+<input type="text" placeholder="Enter type of routine - ex. Squats" name="exercise" required></p>
 
 <p><label><b>Calories</b></label>
-<input type="text" placeholder="Enter calories - ex. 250" name="lname" required></p>
+<input type="text" placeholder="Enter calories - ex. 250" name="calories" required></p>
+
+
+
+<p><label><b>Exercise Id 1</b></label>
+<input type="text" placeholder="Enter Id - ex. 200" name="exr1"></p>
+<p><label><b>Exercise Id 2</b></label>
+<input type="text" placeholder="Enter Id - ex. 250" name="exr2"></p>
+<p><label><b>Exercise Id 3</b></label>
+<input type="text" placeholder="Enter Id - ex. 300" name="exr3"></p>
 
 <div class="clearfix">
    <button type="button"  class="cancelbtn">Reset</button>
    <button type="submit" class="signupbtn">Submit</button>
 </form>
+
 
 </div>
 </div>

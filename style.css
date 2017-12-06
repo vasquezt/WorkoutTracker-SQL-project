@@ -178,6 +178,30 @@ a:hover {
   text-align: center;
 }
 
+.title-container-exercise {
+  margin: 10px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  text-align: center;
+}
+
+.title-container-routine {
+  margin: 10px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  text-align: center;
+}
+
+.title-container-about {
+  margin: 10px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  text-align: left;
+}
+
 .title-container h1 {
   margin: 20px 0;
   font-size: 64px;

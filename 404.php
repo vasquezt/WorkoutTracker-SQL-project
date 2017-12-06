@@ -18,6 +18,7 @@
          <li class="navitem"><a href="./">Home</a></li>
          <li class="navitem"><a href="./mypage.php">My Page</a></li>
          <li class="navitem"><a href="./account.php">Account</a></li>
+         <li class="navitem"><a href="./about.php">About</a></li>
       </ul>
     </center>
 

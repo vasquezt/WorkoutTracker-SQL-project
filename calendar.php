@@ -19,6 +19,7 @@
 		<li class="navitem"><a href="./">Home</a></li>
 		<li class="navitem"><a href="./mypage.php">My Page</a></li>
 		<li class="navitem"><a href="./account.php">Account</a></li>
+		<li class="navitem"><a href="./about.php">About</a></li>
 	</ul>
 </center>
 
@@ -27,6 +28,5 @@
 <div class="title-container">
 
 <form action="./routine.php"><input type="submit" value="Add a routine!"/></form><br>
-<form action="./routine.php"><input type="submit" value="Add an exercise!"/></form><br>
-<form action="./routine.php"><input type="submit" value="Add an event!"/></form><br>
+<form action="./exercise.php"><input type="submit" value="Add an exercise!"/></form><br>
 </div>
