@@ -21,14 +21,14 @@
 <main class="home-page">
   <div class="title-container">
 
-<form action="./checkLogIn.php">
+<form action="./checkLogIn.php" method="post">
   <div class="container">
 
     <p><label><b>Username</b></label>
     <input type="text" placeholder="Enter Username" name="usrname" required></p>
 
     <p><label><b>Password</b></label>
-    <input type="text" placeholder="Enter First Name" name="fname" required></p>
+    <input type="password" placeholder="Enter Password" name="fname" required></p>
 
     <div class="clearfix">
       <button type="submit" class="signupbtn">Log in</button>
