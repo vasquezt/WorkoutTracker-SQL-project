@@ -33,45 +33,64 @@
 	<ul class="days">
       <form action="./calendar.php"><input type="submit" value="New Rout/Exer"/></form>
       <form action="./record_routine.php"><input type="submit" value="Record Routine"/></form>
-      <form action="./maxes.php"><input type="submit" value="View Maxes"/></form>
 	</ul>
 
 	<h2>Upcoming Routines</h2>
 
-<center>
-	<?php
-		//This table is here to show the user potential exercise's to choose
+<?php
+
+	session_start();
 	include 'connectvarsEECS.php';
-		//Checks the connection
-		$conn = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
-		if (!$conn){
-			die('Could not connect: ' . mysql_error());
-		}
-		//Query whole exercise table
-		//We may update to only show personal exercises
-		$query = "SELECT * FROM Routine";
+
+	//Check if able to connect to database
+
+	$conn = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+	if (!$conn){
+		die('Could not connect: ' . mysql_error());
+	}
+
+	//Check if session is in progress
+
+	if($_SESSION){
+		$user = $_SESSION['user'];
+
+		//Query for recorded routines
+
+		echo "$user :";
+
+		$query = "SELECT * FROM Recorded WHERE username = '$user' ORDER BY day;";
 		$result = mysqli_query($conn, $query);
 
-		//Builds top of table
-		$fields_num = mysqli_num_fields($result);
-		echo "<h3>Table: Routine </h3>";
-		echo "<table border ='1'><tr>";
-		//Creates whole table of elements
-		for($i=0; $i<$fields_num; $i++){
-			$field = mysqli_fetch_field($result);
-			echo "<td><b>$field->name</b></td>";
+		if($result){
+
+			//For each result, we will display data
+
+			while($row = mysqli_fetch_array($result)) {
+
+				//We are gabing the name's of the routines
+				echo "\nID: $row[1], ";
+
+				$the_query = "SELECT routine FROM Routine WHERE routine_id = '$row[1]';";
+				$value = mysqli_query($conn, $the_query);
+				if($value){
+					echo "found";
+					echo "Name: $value";
+				}else{
+					echo "failed to find";
+				}
+
+
+			}
+		}else{
+			echo "You need to add some routines to your page";
 		}
-		echo "</tr>\n";
-		while($row = mysqli_fetch_row($result)) {
-			echo "<tr>";
-			foreach($row as $cell)
-				echo "<td>$cell</td>";
-			echo "</td>\n";
-		}
-		mysqli_free_result($result);
-		mysqli_close($conn);
-	?>
-</center>
+	}else{
+		echo "You need to log in to view Routines";
+	}
+
+	mysqli_close($conn);
+?>
+
 <br>
 
 
