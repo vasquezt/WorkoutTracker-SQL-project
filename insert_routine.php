@@ -18,23 +18,36 @@
 
 include 'connectvarsEECS.php';
 
+	//Check if able to connect to Data base
+
 	$conn = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 	if (!$conn){
 		die('Could not connect: ' . mysql_error());
 	}
+
+	// Check if there is a session in progress to atribute user too
 	
 	if($_SESSION){
 		$author = $_SESSION['user'];
 	}else{
-		$author = "anon";
+		$author = "Anon";
 	}
+	
+	// Grab data from post request and cleans it
+
 	$routine = mysqli_real_escape_string($conn, $_POST['routine']);
 	$exercise = mysqli_real_escape_string($conn, $_POST['exercise']);
 	$calories = mysqli_real_escape_string($conn, $_POST['calories']);
 
-	$max_query = "SELECT MAX(routine_id) FROM Routine";
-	$number = mysqli_query($conn, $max_query);
-	$id = $number + 1;
+	// Grabs largest id in database and incraments
+	// This allows for all elements to have unique id
+
+	$row_q = "SELECT MAX(routine_id) AS max FROM Routine;";
+	$rowSQL = mysqli_query($conn, $row_q);
+	$row = mysqli_fetch_array($rowSQL);
+	$id = $row['max'] + 1;
+
+	//Adds the routine to the Database
 
 	$query = "INSERT INTO Routine (routine_id, routine, type, calories, author) VALUES ('$id', '$routine', '$exercise', '$calories', '$author')";
 	if(mysqli_query($conn, $query)){
@@ -43,10 +56,14 @@ include 'connectvarsEECS.php';
 		echo "Error: " . mysqli_error($conn);
 	}
 
+	// Cleans the possible exercise id's
+
 	$exr1 = mysqli_real_excape_string($conn, $_POST['exr1']);
 	$exr2 = mysqli_real_excape_string($conn, $_POST['exr2']);
 	$exr3 = mysqli_real_excape_string($conn, $_POST['exr3']);
 
+	// The following three loops go throuh and check if an exercise id exists
+	// Then they will execute an addition if it does
 
 	if($exr1 != ""){
 		$q1 = "SELECT exercise_id FROM Exercise WHERE exercise_id = '$exr1'";
