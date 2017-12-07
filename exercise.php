@@ -52,38 +52,7 @@
 
 	  </div>
 	</form>
-	<?php
-		//This table is here to show the user potential exercise's to choose
-	include 'connectvarsEECS.php';
-		//Checks the connection
-		$conn = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
-		if (!$conn){
-			die('Could not connect: ' . mysql_error());
-		}
-		//Query whole exercise table
-		//We may update to only show personal exercises
-		$query = "SELECT * FROM Exercises";
-		$result = mysqli_query($conn, $query);
 
-		//Builds top of table
-		$fields_num = mysqli_num_fields($result);
-		echo "<h3>Table: Exercises </h3>";
-		echo "<table border ='1'><tr>";
-		//Creates whole table of elements
-		for($i=0; $i<$fields_num; $i++){
-			$field = mysqli_fetch_field($result);
-			echo "<td><b>$field->name</b></td>";
-		}
-		echo "</tr>\n";
-		while($row = mysqli_fetch_row($result)) {
-			echo "<tr>";
-			foreach($row as $cell)
-				echo "<td>$cell</td>";
-			echo "</td>\n";
-		}
-		mysqli_free_result($result);
-		mysqli_close($conn);
-	?>
 
 </div>
 </main>
