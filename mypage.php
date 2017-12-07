@@ -19,22 +19,14 @@
 		<li class="navitem"><a href="./">Home</a></li>
 		<li class="navitem"><a href="./mypage.php">My Page</a></li>
 		<li class="navitem"><a href="./account.php">Account</a></li>
+		<li class="navitem"><a href="./about.php">About</a></li>
 	</ul>
 </center>
 
 <main class="home-page">
 <div class="title-container">
 
-   <div>
-	This page displays your workout calendar and account information.
    <br>
-   </div>
-   <br>
-
-<!-- EXAMPLES USED FOR CLASS
-	<h4>Exercise 1 - Reps: 20, Muscle Group: Biceps, Intensity: 5</h4><br>
-	<h4>Exercise 2 - Reps: 30, Muscle Group: Abs, Intensity: 10</h4><br>
--->
 
    <!-- CALENDAR -->
    <div class="month">
@@ -42,7 +34,7 @@
 			<li class="prev">&#10094;</li>
 			<li class="next">&#10095;</li>
 			<li>
-			August<br>
+			DECEMBER<br>
 			<span style="font-size:18px">2017</span>
 			</li>
 		</ul>
@@ -96,70 +88,78 @@
       <form action="./calendar.php"><input type="submit" value="30"/></form>
 	</ul>
 
-   <h3>Upcoming routines, exercises, and events</h3>
+<center>
+		 <?php
+	 include 'connectvarsEECS.php';
 
-   <a href="http://www.fg-a.com" target="_blank"><img class="embeddedObject"
-      src="http://content.screencast.com/users/fg-a/folders/christmas/media/5f436007-c128-4da4-bc2a-127b7df5a1a4/santa_g2.gif"
-      width="150" height="150" border="0" alt="Clipart" /></a>
+	 	$conn = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+	 	if (!$conn){
+	 		die('Could not connect: ' . mysql_error());
+	 	}
 
-   <ul class="weeks-grid">
-   	Date: Exercise - 12/15/17
-      <li>Name: Bench Press</li>
-      <li>Reps: 15</li>
-      <li>Muscle: Pectoralis Major</li>
-   	<li>Intensity: 5</li>
-   </ul>
-   <ul class="weeks-grid">
-   	Date: Routine - 12/25/17
-      <li>Name: Leg Day</li>
-      <li>Type: Squats, Leg Press, Calf Raises</li>
-      <li>Calories: 200</li>
-   </ul>
+	 	$query = "SELECT * FROM Exercises";
+	 	$result = mysqli_query($conn, $query);
 
-   <a href="http://www.fg-a.com" target="_blank"><img class="embeddedObject"
-      src="http://content.screencast.com/users/fg-a/folders/christmas/media/5f436007-c128-4da4-bc2a-127b7df5a1a4/santa_g2.gif"
-      width="150" height="150" border="0" alt="Clipart" /></a>
+	 	$fields_num = mysqli_num_fields($result);
+	 echo "<h3>Upcoming Exercises</h3>";
+	 	echo "<table border ='1'><tr>";
 
-		<h3>Past routines, exercises, and events</h3>
-		<ul class="weeks-grid">
-			Date: Routine - 10/15/17
-			<li>Name: Leg Day</li>
-			<li>Type: Squats, Leg Press, Calf Raises</li>
-			<li>Calories: 200</li>
-		</ul>
+
+
+	 	for($i=0; $i<$fields_num; $i++){
+	 		$field = mysqli_fetch_field($result);
+	 		echo "<td><b>$field->name</b></td>";
+	 	}
+	 	echo "</tr>\n";
+	 	while($row = mysqli_fetch_row($result)) {
+	 		echo "<tr>";
+	 		foreach($row as $cell)
+	 			echo "<td>$cell</td>";
+	 		echo "</td>\n";
+	 	}
+
+	 	mysqli_free_result($result);
+	 	mysqli_close($conn);
+		echo "</table><tr>";
+
+	 ?>
+</center>
+
+<br>
+
+<center>
+		 <?php
+	 include 'connectvarsEECS.php';
+
+	 	$conn = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+	 	if (!$conn){
+	 		die('Could not connect: ' . mysql_error());
+	 	}
+
+	 	$query = "SELECT * FROM Routine";
+	 	$result = mysqli_query($conn, $query);
+
+	 	$fields_num = mysqli_num_fields($result);
+	 	echo "<h3> Upcoming Routines</h3>";
+	 	echo "<table border ='1'><tr>";
+
+
+	 	for($i=0; $i<$fields_num; $i++){
+	 		$field = mysqli_fetch_field($result);
+	 		echo "<td><b>$field->name</b></td>";
+	 	}
+	 	echo "</tr>\n";
+	 	while($row = mysqli_fetch_row($result)) {
+	 		echo "<tr>";
+	 		foreach($row as $cell)
+	 			echo "<td>$cell</td>";
+	 		echo "</td>\n";
+	 	}
+
+	 	mysqli_free_result($result);
+	 	mysqli_close($conn);
+	 ?>
+</center>
+
 </div>
 </main>
-<!--
-<h4>Top Gym Member Results</h4>
-try to beat them! <br>
-<p>
-<ul class="weeks-grid">
-	Bella
-	<li>Bench Press 230</li>
-	<li>Deadlift 322</li>
-	<li>Running 11</li>
-</ul>
-<ul class="weeks-grid">
-	Liam
-	<li>Bench Press 228</li>
-	<li>Deadlift 319</li>
-	<li>Running 8</li>
-</ul>
-<ul class="weeks-grid">
-	Noah
-	<li>Bench Press 220</li>
-	<li>Deadlift 315</li>
-	<li>Running 7</li>
-</ul>
-<ul class="weeks-grid">
-	Lucy
-	<li>Bench Press 205</li>
-	<li>Deadlift 298</li>
-	<li>Running 5</li>
-</ul>
-</p>
-</p>
-	   </div>
-
-	   </main>
-	   -->

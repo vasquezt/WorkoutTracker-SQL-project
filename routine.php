@@ -19,6 +19,7 @@
 		<li class="navitem"><a href="./">Home</a></li>
 		<li class="navitem"><a href="./mypage.php">My Page</a></li>
 		<li class="navitem"><a href="./account.php">Account</a></li>
+		<li class="navitem"><a href="./about.php">About</a></li>
 	</ul>
 </center>
 
@@ -48,6 +49,7 @@
    <button type="button"  class="cancelbtn">Reset</button>
    <button type="submit" class="signupbtn">Submit</button>
 </form>
+
 
 <?php
 include 'connectvarsEECS.php';
@@ -80,6 +82,7 @@ include 'connectvarsEECS.php';
 	mysqli_free_result($result);
 	mysqli_close($conn);
 ?>
+
 
 </div>
 </div>

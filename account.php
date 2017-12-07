@@ -6,7 +6,7 @@
   <link rel="stylesheet" href="./style.css">
   <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js">
   </script>
-    
+
 </head>
 
 <header>
@@ -18,6 +18,7 @@
      <li class="navitem"><a href="./">Home</a></li>
      <li class="navitem"><a href="./mypage.php">My Page</a></li>
      <li class="navitem"><a href="./account.php">Account</a></li>
+     <li class="navitem"><a href="./about.php">About</a></li>
   </ul>
 </center>
 
@@ -37,7 +38,7 @@
 
     <p><label><b>Email</b></label>
     <input type="text" placeholder="Enter Email" name="lname" required></p>
-    
+
     <div class="clearfix">
       <button type="button"  class="cancelbtn">Cancel</button>
       <button type="submit" id="signupbtn">Sign Up</button>
