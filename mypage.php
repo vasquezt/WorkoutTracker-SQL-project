@@ -58,7 +58,7 @@
 		//Query for recorded routines ordered by the time they occure
 		echo "<h4> Data is in Day/Month/Year format and sorted by date </h4>";
 
-		echo "$user";
+		echo "$user <br />";
 
 		$query = "SELECT * FROM Recorded WHERE username = '$user' ORDER BY year, month, day";
 		$result = mysqli_query($conn, $query);
@@ -70,8 +70,8 @@
 			while($row = mysqli_fetch_array($result)) {
 		
 				//We are gabing the name's of the routines
-				echo "<p>ID: $row[1], ";
-				echo "Time: $row[4] \n Date: $row[5]/$row[6]/$row[7]</p>";
+				echo "<a>ID: $row[1], ";
+				echo "Time: $row[4] \n Date: $row[5]/$row[6]/$row[7]</a> <br />";
 /*				$the_query = "SELECT routine FROM Routine WHERE routine_id = '$row[1]'";
 				$value = mysqli_query($conn, $the_query);
 				if($value){
