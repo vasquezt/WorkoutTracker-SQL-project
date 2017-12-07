@@ -1,3 +1,4 @@
+
 <head>
 	<meta charset="utf-8">
 	<title>Workout Tracker</title>
@@ -26,8 +27,8 @@
 
 
 <?php
-
-include 'connectvarsEECS.php';
+	session_start();
+	include 'connectvarsEECS.php';
 
 
 	//Check if able to connect to Data base
@@ -149,10 +150,16 @@ include 'connectvarsEECS.php';
 <?php
 include 'connectvarsEECS.php';
 
+	//This section of code gets the table of options and displays it to users
+
+	//Checks connection
+
 	$conn = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 	if (!$conn){
 		die('Could not connect: ' . mysql_error());
 	}
+
+	//Queries for exercise table
 
 	$query = "SELECT * FROM Exercises";
 	$result = mysqli_query($conn, $query);
@@ -161,6 +168,7 @@ include 'connectvarsEECS.php';
 	echo "<h3>Table: Exercises </h3>";
 	echo "<table border ='1'><tr>";
 
+	//Prints table below
 
 	for($i=0; $i<$fields_num; $i++){
 		$field = mysqli_fetch_field($result);

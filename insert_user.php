@@ -11,11 +11,9 @@
 </header>
 
 <?php
+	session_start();
 	include 'connectvarsEECS.php';
 
-	//If there is a session, it will be cleared
-
-	session_destroy();
 
 	//Check if connection is working
 
@@ -44,7 +42,6 @@
 
 		//Start a session with the new user
 
-		session_start();
 		$_SESSION['user'] = $username;
 		$_SESSION['pass'] = $password;
 	}else{

@@ -1,3 +1,4 @@
+
 <head>
 	<meta charset="utf-8">
 	<title>Workout Tracker</title>
@@ -20,146 +21,73 @@
 		<li class="navitem"><a href="./mypage.php">My Page</a></li>
 		<li class="navitem"><a href="./account.php">Account</a></li>
 		<li class="navitem"><a href="./about.php">About</a></li>
+
 	</ul>
 </center>
 
 <main class="home-page">
 <div class="title-container">
 
-   <br>
-
-   <!-- CALENDAR -->
-   <div class="month">
-		<ul>
-			<li class="prev">&#10094;</li>
-			<li class="next">&#10095;</li>
-			<li>
-			DECEMBER<br>
-			<span style="font-size:18px">2017</span>
-			</li>
-		</ul>
-	</div>
-
-	<ul class="weekdays">
-		<li>Monday</li>
-		<li>Tuesday</li>
-		<li>Wednesday</li>
-		<li>Thursday</li>
-		<li>Friday</li>
-		<li>Saturday</li>
-		<li>Sunday</li>
-	</ul>
+<br>
 
 	<ul class="days">
-
-      <form action="./calendar.php"><input type="submit" value="1"/></form>
-      <form action="./calendar.php"><input type="submit" value="2"/></form>
-      <form action="./calendar.php"><input type="submit" value="3"/></form>
-      <form action="./calendar.php"><input type="submit" value="4"/></form>
-      <form action="./calendar.php"><input type="submit" value="5"/></form>
-      <form action="./calendar.php"><input type="submit" value="6"/></form>
-      <form action="./calendar.php"><input type="submit" value="7"/></form>
-      <br>
-      <form action="./calendar.php"><input type="submit" value="8"/></form>
-      <form action="./calendar.php"><input type="submit" value="9"/></form>
-      <form action="./calendar.php"><input type="submit" value="10"/></form>
-      <form action="./calendar.php"><input type="submit" value="11"/></form>
-      <form action="./calendar.php"><input type="submit" value="12"/></form>
-      <form action="./calendar.php"><input type="submit" value="13"/></form>
-      <form action="./calendar.php"><input type="submit" value="14"/></form>
-      <br>
-      <form action="./calendar.php"><input type="submit" value="15"/></form>
-      <form action="./calendar.php"><input type="submit" value="16"/></form>
-      <form action="./calendar.php"><input type="submit" value="17"/></form>
-      <form action="./calendar.php"><input type="submit" value="18"/></form>
-      <form action="./calendar.php"><input type="submit" value="19"/></form>
-      <form action="./calendar.php"><input type="submit" value="20"/></form>
-      <form action="./calendar.php"><input type="submit" value="21"/></form>
-      <br>
-      <form action="./calendar.php"><input type="submit" value="22"/></form>
-      <form action="./calendar.php"><input type="submit" value="23"/></form>
-      <form action="./calendar.php"><input type="submit" value="24"/></form>
-      <form action="./calendar.php"><input type="submit" value="25"/></form>
-      <form action="./calendar.php"><input type="submit" value="26"/></form>
-      <form action="./calendar.php"><input type="submit" value="27"/></form>
-      <form action="./calendar.php"><input type="submit" value="28"/></form>
-      <br>
-      <form action="./calendar.php"><input type="submit" value="29"/></form>
-      <form action="./calendar.php"><input type="submit" value="30"/></form>
+      <form action="./calendar.php"><input type="submit" value="Create New Routine/Exercise"/></form>
+      <form action="./calendar.php"><input type="submit" value="Record a Routine"/></form>
 	</ul>
 
-<center>
-		 <?php
-	 include 'connectvarsEECS.php';
+	<h2>Upcoming Routines</h2>
 
-	 	$conn = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
-	 	if (!$conn){
-	 		die('Could not connect: ' . mysql_error());
-	 	}
+<?php
+	
+	session_start();
+	include 'connectvarsEECS.php';
 
-	 	$query = "SELECT * FROM Exercises";
-	 	$result = mysqli_query($conn, $query);
+	//Check if able to connect to database
+	
+	$conn = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+	if (!$conn){
+		die('Could not connect: ' . mysql_error());
+	}
 
-	 	$fields_num = mysqli_num_fields($result);
-	 echo "<h3>Upcoming Exercises</h3>";
-	 	echo "<table border ='1'><tr>";
+	//Check if session is in progress
+	
+	if($_SESSION){
+		$user = $_SESSION['user'];
 
+		//Query for recorded routines
+	
+		echo "$user :";
 
+		$query = "SELECT * FROM Recorded WHERE username = '$user'";
+		$result = mysqli_query($conn, $query);
 
-	 	for($i=0; $i<$fields_num; $i++){
-	 		$field = mysqli_fetch_field($result);
-	 		echo "<td><b>$field->name</b></td>";
-	 	}
-	 	echo "</tr>\n";
-	 	while($row = mysqli_fetch_row($result)) {
-	 		echo "<tr>";
-	 		foreach($row as $cell)
-	 			echo "<td>$cell</td>";
-	 		echo "</td>\n";
-	 	}
+		if($result){
 
-	 	mysqli_free_result($result);
-	 	mysqli_close($conn);
-		echo "</table><tr>";
+			//For each result, we will display data
+		
+			while($row = mysqli_fetch_array($result)) {
+		
+				//We are gabing the name's of the routines
+				echo "\nID: $row[1], ";
 
-	 ?>
-</center>
+				$the_query = "SELECT routine FROM Routine WHERE routine_id = '$row[0]'";
+				$value = mysqli_query($conn, $the_query);
+				echo "Name: $value";
+		 
+
+			}
+		}else{
+			echo "You need to add some routines to your page";
+		}
+	}else{
+		echo "You need to log in to view Routines";
+	}
+	
+	mysqli_close($conn);
+?>	
 
 <br>
 
-<center>
-		 <?php
-	 include 'connectvarsEECS.php';
-
-	 	$conn = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
-	 	if (!$conn){
-	 		die('Could not connect: ' . mysql_error());
-	 	}
-
-	 	$query = "SELECT * FROM Routine";
-	 	$result = mysqli_query($conn, $query);
-
-	 	$fields_num = mysqli_num_fields($result);
-	 	echo "<h3> Upcoming Routines</h3>";
-	 	echo "<table border ='1'><tr>";
-
-
-	 	for($i=0; $i<$fields_num; $i++){
-	 		$field = mysqli_fetch_field($result);
-	 		echo "<td><b>$field->name</b></td>";
-	 	}
-	 	echo "</tr>\n";
-	 	while($row = mysqli_fetch_row($result)) {
-	 		echo "<tr>";
-	 		foreach($row as $cell)
-	 			echo "<td>$cell</td>";
-	 		echo "</td>\n";
-	 	}
-
-	 	mysqli_free_result($result);
-	 	mysqli_close($conn);
-	 ?>
-</center>
 
 </div>
 </main>
