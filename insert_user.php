@@ -38,6 +38,12 @@
 
 	$query = "INSERT INTO Users (username, hashed_pass, salt, email) VALUES ('$username', '$password', '$salt', '$email')";
 	if(mysqli_query($conn, $query)){
+		
+		// Make an empty spot in maxes
+
+		$query2 = "INSERT INTO Max_Exercises (username, bench_pounds, squat_pounds, 2_mile_run) VALUES ('$user', '0', '0', '99')";
+		mysqli_query($conn, $query2);
+
 		echo "recorded successfully";
 
 		//Start a session with the new user
