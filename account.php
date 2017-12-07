@@ -26,7 +26,7 @@
   <div class="title-container">
 
    <form action="./login.php"><input type="submit" value="Login!"/></form>
-   <form action="./loginOut.php"><input type="submit" value="Log Out!"/></form>
+   <form action="./logOut.php"><input type="submit" value="Log Out!"/></form>
 
 <form action="./insert_user.php" method="post">
   <div class="container">

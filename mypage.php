@@ -31,8 +31,8 @@
 <br>
 
 	<ul class="days">
-      <form action="./calendar.php"><input type="submit" value="Create New Routine/Exercise"/></form>
-      <form action="./calendar.php"><input type="submit" value="Record a Routine"/></form>
+      <form action="./calendar.php"><input type="submit" value="New Rout/Exer"/></form>
+      <form action="./calendar.php"><input type="submit" value="Record Routine"/></form>
 	</ul>
 
 	<h2>Upcoming Routines</h2>
@@ -58,7 +58,7 @@
 	
 		echo "$user :";
 
-		$query = "SELECT * FROM Recorded WHERE username = '$user'";
+		$query = "SELECT * FROM Recorded WHERE username = '$user' ORDER BY day;";
 		$result = mysqli_query($conn, $query);
 
 		if($result){
@@ -70,9 +70,14 @@
 				//We are gabing the name's of the routines
 				echo "\nID: $row[1], ";
 
-				$the_query = "SELECT routine FROM Routine WHERE routine_id = '$row[0]'";
+				$the_query = "SELECT routine FROM Routine WHERE routine_id = '$row[1]';";
 				$value = mysqli_query($conn, $the_query);
-				echo "Name: $value";
+				if($value){
+					echo "found";
+					echo "Name: $value";
+				}else{
+					echo "failed to find";
+				}
 		 
 
 			}
