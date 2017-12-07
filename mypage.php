@@ -32,7 +32,7 @@
 
 	<ul class="days">
       <form action="./calendar.php"><input type="submit" value="New Rout/Exer"/></form>
-      <form action="./calendar.php"><input type="submit" value="Record Routine"/></form>
+      <form action="./record_routine.php"><input type="submit" value="Record Routine"/></form>
 	</ul>
 
 	<h2>Upcoming Routines</h2>

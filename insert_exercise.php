@@ -11,6 +11,7 @@
 </header>
 
 <?php
+	session_start();
 	//Check if connection is ok
 
 	include 'connectvarsEECS.php';
@@ -29,7 +30,7 @@
 
 	//Get unique id for the exercise
 	
-	$row_q = "SELECT MAX(exercise_id) AS max FROM Exercise;";
+	$row_q = "SELECT MAX(exercise_id) AS max FROM Exercises;";
 	$rowSQL = mysqli_query($conn, $row_q);
 	$row = mysqli_fetch_array($rowSQL);
 	$exercise_id = $row['max'] + 1;

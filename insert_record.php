@@ -43,71 +43,38 @@
 	// Check if there is a session in progress to atribute user too
 	
 	if($_SESSION){
-		$author = $_SESSION['user'];
-	}else{
-		$author = "Anon";
-	}
+		$username = $_SESSION['user'];
 	
 	// Grab data from post request and cleans it
 
 
-	$routine = mysqli_real_escape_string($conn, $_POST['routine']);
-	$exercise = mysqli_real_escape_string($conn, $_POST['exercise']);
-	$calories = mysqli_real_escape_string($conn, $_POST['calories']);
+		$routine_id = mysqli_real_escape_string($conn, $_POST['routine_id']);
+		$time = mysqli_real_escape_string($conn, $_POST['time']);
+		$day = mysqli_real_escape_string($conn, $_POST['day']);
+		$month = mysqli_real_escape_string($conn, $_POST['month']);
+		$year = mysqli_real_escape_string($conn, $_POST['year']);
+	
+	
+		// Grabs largest id in database and incraments
+		// This allows for all elements to have unique id
+	
+		$row_q = "SELECT MAX(recorded_id) AS max FROM Recorded;";
+		$rowSQL = mysqli_query($conn, $row_q);
+		$row = mysqli_fetch_array($rowSQL);
+		$id = $row['max'] + 1;
+	
 
 
-	// Grabs largest id in database and incraments
-	// This allows for all elements to have unique id
+		$query = "INSERT INTO Recorded (recorded_id, routine_id, username, event_id, time, day, month, year) VALUES ('$id', '$routine_id', '$username', '0', '$time', '$day', '$month', '$year')";
+		if(mysqli_query($conn, $query)){
+			echo "Recorded successfully";
+		}else{
+			echo "Error: " . mysqli_error($conn);
+		}
 
-	$row_q = "SELECT MAX(routine_id) AS max FROM Routine;";
-	$rowSQL = mysqli_query($conn, $row_q);
-	$row = mysqli_fetch_array($rowSQL);
-	$id = $row['max'] + 1;
-
-
-
-	$query = "INSERT INTO Routine (routine_id, routine, type, calories, author) VALUES ('$id', '$routine', '$exercise', '$calories', '$author')";
-	if(mysqli_query($conn, $query)){
-		echo "Recorded successfully";
 	}else{
-		echo "Error: " . mysqli_error($conn);
+		echo "You need to log in to record!";
 	}
-
-
-	// Cleans the possible exercise id's
-
-
-	$exr1 = mysqli_real_excape_string($conn, $_POST['exr1']);
-	$exr2 = mysqli_real_excape_string($conn, $_POST['exr2']);
-	$exr3 = mysqli_real_excape_string($conn, $_POST['exr3']);
-
-
-	// The following three loops go throuh and check if an exercise id exists
-	// Then they will execute an addition if it does
-
-
-	if($exr1 != ""){
-		$q1 = "SELECT exercise_id FROM Exercise WHERE exercise_id = '$exr1'";
-		if(mysqli_query($conn, $q1)){
-			$q11 = "INSERT INTO Routine_Includes (routine_id, exercise_id) VALUES ('$id', '$exr1)";
-			mysqli_query($conn, $q11);
-		}
-	}
-	if($exr2 != ""){
-		$q2 = "SELECT exercise_id FROM Exercise WHERE exercise_id = '$exr2'";
-		if(mysqli_query($conn, $q2)){
-			$q22 = "INSERT INTO Routine_Includes (routine_id, exercise_id) VALUES ('$id', '$exr2)";
-			mysqli_query($conn, $q22);
-		}
-	}
-	if($exr3 != ""){
-		$q3 = "SELECT exercise_id FROM Exercise WHERE exercise_id = '$exr3'";
-		if(mysqli_query($conn, $q3)){
-			$q33 = "INSERT INTO Routine_Includes (routine_id, exercise_id) VALUES ('$id', '$exr3)";
-			mysqli_query($conn, $q33);
-		}
-	}
-
 
 	mysqli_close($conn);
 ?>
