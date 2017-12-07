@@ -13,31 +13,45 @@
 <?php
 	include 'connectvarsEECS.php';
 
+	//If there is a session, it will be cleared
+
 	session_destroy();
+
+	//Check if connection is working
 
 	$conn = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 	if(!$conn){
 		die('Could not connect: ' . mysql_error());
 	}
 
+	//Escape all data for security
+
 	$username = mysqli_real_escape_string($conn, $_POST['usrname']);
 	$password = mysqli_real_escape_string($conn, $_POST['psw']);
 	$email = mysqli_real_escape_string($conn, $_POST['lname']);
 
+	//Apply salt and encription to password
 
 	$salt = base64_encode(mcrypt_create_iv(12, MCRYPT_DEV_URANDOM));
 	$password = $password.$salt;
 	$password = hash(md5, $password);
 
+	//Insert query
+
 	$query = "INSERT INTO Users (username, hashed_pass, salt, email) VALUES ('$username', '$password', '$salt', '$email')";
 	if(mysqli_query($conn, $query)){
 		echo "recorded successfully";
+
+		//Start a session with the new user
+
 		session_start();
 		$_SESSION['user'] = $username;
 		$_SESSION['pass'] = $password;
 	}else{
 		echo "ERROR: couldn't preform $query. ". mysqli_error($conn);
 	}
+
+	//Close connection
 
 	mysqli_close($conn);
 ?>

@@ -11,18 +11,30 @@
 </header>
 
 <?php
+	//Check if connection is ok
+
 	include 'connectvarsEECS.php';
 	$conn = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 	if(!$conn){
 		die('Could not connect: ' . mysql_error());
 	}
 
-   $exercise_id = mysqli_real_escape_string($conn, $_POST['exercise_id']);
+	//Grab data and clean it
+
 	$exercise = mysqli_real_escape_string($conn, $_POST['exercise']);
-   $author = mysqli_real_escape_string($conn, $_POST['author']);
+        $author = mysqli_real_escape_string($conn, $_POST['author']);
 	$muscle = mysqli_real_escape_string($conn, $_POST['muscle']);
 	$intensity = mysqli_real_escape_string($conn, $_POST['intensity']);
-   $reps = mysqli_real_escape_string($conn, $_POST['reps']);
+        $reps = mysqli_real_escape_string($conn, $_POST['reps']);
+
+	//Get unique id for the exercise
+	
+	$row_q = "SELECT MAX(exercise_id) AS max FROM Exercise;";
+	$rowSQL = mysqli_query($conn, $row_q);
+	$row = mysqli_fetch_array($rowSQL);
+	$exercise_id = $row['max'] + 1;
+
+	//Insert Query into database
 
 	$query = "INSERT INTO Exercises (exercise_id, exercise, author, muscle, intensity, reps) VALUES ('$exercise_id','$exercise', '$author','$muscle', '$intensity', '$reps')";
 	if(mysqli_query($conn, $query)){
@@ -30,6 +42,8 @@
 	}else{
 		echo "ERROR: couldn't preform $query. ". mysqli_error($conn);
 	}
+
+	//Close connection
 
 	mysqli_close($conn);
 ?>
@@ -45,6 +59,5 @@
 
 <main class="home-page">
   <div class="title-container">
-     <h2>Entered Successfully!</h2>
 </div>
 </main>

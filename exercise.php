@@ -30,9 +30,6 @@
 	<form action="./insert_exercise.php" method="post">
 	  <div class="container-exercise">
 
-		 <p><label><b>Exercise ID</b></label>
- 	    <input type="text" placeholder="Enter Exercise ID" name="exercise_id" required></p>
-
 	    <p><label><b>Exercise</b></label>
 	    <input type="text" placeholder="Enter Exercise" name="exercise" required></p>
 

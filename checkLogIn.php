@@ -16,25 +16,39 @@
 
 <?php
 	include 'connectvarsEECS.php';
-	
+
+	// If a user was previosly logged in, it will end their session
+
 	session_destroy();
+
+	//Check connection
 
 	$conn = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 	if (!$conn){
 		die('Could not connect: ' .mysql_error());
 	}
 
+	//Get and escape post variables for security
+
 	$username = mysqli_real_escape_string($conn, $_POST['usrname']);
 	$password = mysqli_real_escape_string($conn, $_POST['fname']);
+
+	//Will query for the salt that is associated with user
 
 	$query = "SELECT salt FROM Users WHERE username = '$username'";
 	$result = mysqli_query($conn, $query);
 	if ($row = mysqli_fetch_assoc($result)){
 		$salt = $row['salt'];
+
+		// Will apply salt and check password
+
 		$hash = hash(MD5, $password.$salt);
 		$saltSql = "SELECT * FROM Users WHERE username = '$username' AND hashed_pass = '$hash'";
 		$final = mysqli_query($conn, $saltSql);
 		if($finalrow = mysqli_fetch_assoc($final)){
+
+			//If valid, start new session with user
+
 			echo "Valid user login";
 			session_start();
 			$_SESSION['user'] = $username;
@@ -45,6 +59,9 @@
 	}else{
 		echo "Invalid login: User doesn't exist";
 	}
+
+	// Close the connection
+
 	mysqli_close($conn);
 ?>	
 
