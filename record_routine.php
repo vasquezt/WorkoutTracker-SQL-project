@@ -26,7 +26,7 @@
 <main class="home-page">
 <div class="title-container">
 <center>
-<form action="./insert_routine.php" method="post">
+<form action="./insert_record.php" method="post">
 <p><label><b>Routine Id</b></label>
 <input type="text" placeholder="Enter routine id" name="routine_id" required></p>
 

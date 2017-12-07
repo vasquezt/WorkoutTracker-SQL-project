@@ -55,11 +55,12 @@
 	if($_SESSION){
 		$user = $_SESSION['user'];
 
-		//Query for recorded routines
-	
-		echo "$user :";
+		//Query for recorded routines ordered by the time they occure
+		echo "<h4> Data is in Day/Month/Year format and sorted by date </h4>";
 
-		$query = "SELECT * FROM Recorded WHERE username = '$user' ORDER BY day;";
+		echo "$user";
+
+		$query = "SELECT * FROM Recorded WHERE username = '$user' ORDER BY year, month, day";
 		$result = mysqli_query($conn, $query);
 
 		if($result){
@@ -69,16 +70,18 @@
 			while($row = mysqli_fetch_array($result)) {
 		
 				//We are gabing the name's of the routines
-				echo "\nID: $row[1], ";
-
-				$the_query = "SELECT routine FROM Routine WHERE routine_id = '$row[1]';";
+				echo "<p>ID: $row[1], ";
+				echo "Time: $row[4] \n Date: $row[5]/$row[6]/$row[7]</p>";
+/*				$the_query = "SELECT routine FROM Routine WHERE routine_id = '$row[1]'";
 				$value = mysqli_query($conn, $the_query);
 				if($value){
-					echo "found";
-					echo "Name: $value";
+					//*****
+					//While we can query for the name, the website fails when we try to echo it
+					//echo "Name: $value";
+					//*****
 				}else{
 					echo "failed to find";
-				}
+				}*/
 		 
 
 			}
