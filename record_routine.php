@@ -120,7 +120,7 @@ include 'connectvarsEECS.php';
 
 
 	}else{
-		echo "Make sure to log in before recording!";
+		echo "<h3>Make sure to log in before recording!</h3>";
 	}	
 	mysqli_close($conn);
 ?>
