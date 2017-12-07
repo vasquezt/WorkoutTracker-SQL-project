@@ -33,53 +33,58 @@
 	<ul class="days">
       <form action="./calendar.php"><input type="submit" value="New Rout/Exer"/></form>
       <form action="./record_routine.php"><input type="submit" value="Record Routine"/></form>
-			<form action="./maxes.php"><input type="submit" value="View Maxes"/></form>
+
+      <form action="./maxes.php"><input type="submit" value="View Maxes"/></form>
+
 	</ul>
 
 	<h2>Upcoming Routines</h2>
 
 <?php
-
+	
 	session_start();
 	include 'connectvarsEECS.php';
 
 	//Check if able to connect to database
-
+	
 	$conn = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 	if (!$conn){
 		die('Could not connect: ' . mysql_error());
 	}
 
 	//Check if session is in progress
-
+	
 	if($_SESSION){
 		$user = $_SESSION['user'];
 
-		//Query for recorded routines
+		//Query for recorded routines ordered by the time they occure
+		echo "<h4> Data is in Day/Month/Year format and sorted by date </h4>";
 
-		echo "$user :";
+		echo "$user <br />";
 
-		$query = "SELECT * FROM Recorded WHERE username = '$user' ORDER BY day;";
+		$query = "SELECT * FROM Recorded WHERE username = '$user' ORDER BY year, month, day";
 		$result = mysqli_query($conn, $query);
 
 		if($result){
 
 			//For each result, we will display data
-
+		
 			while($row = mysqli_fetch_array($result)) {
-
+		
 				//We are gabing the name's of the routines
-				echo "\nID: $row[1], ";
-
-				$the_query = "SELECT routine FROM Routine WHERE routine_id = '$row[1]';";
+				echo "<a>ID: $row[1], ";
+				echo "Time: $row[4] \n Date: $row[5]/$row[6]/$row[7]</a> <br />";
+/*				$the_query = "SELECT routine FROM Routine WHERE routine_id = '$row[1]'";
 				$value = mysqli_query($conn, $the_query);
 				if($value){
-					echo "found";
-					echo "Name: $value";
+					//*****
+					//While we can query for the name, the website fails when we try to echo it
+					//echo "Name: $value";
+					//*****
 				}else{
 					echo "failed to find";
-				}
-
+				}*/
+		 
 
 			}
 		}else{
@@ -88,9 +93,9 @@
 	}else{
 		echo "You need to log in to view Routines";
 	}
-
+	
 	mysqli_close($conn);
-?>
+?>	
 
 <br>
 
